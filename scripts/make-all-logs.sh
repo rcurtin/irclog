@@ -36,7 +36,7 @@ do
   echo "<br>" >> $htmldir/all-logs.tmp;
 done
 
-cat $htmldir/templates/header-all.html $htmldir/all-logs.tmp $htmldir/templates/footer.html > $htmldir/all-logs.html;
+cat $htmldir/templates/header-all.html $htmldir/all-logs.tmp $htmldir/templates/footer.html > $htmldir/logs-all.html;
 
 rm -f $htmldir/all-logs.tmp;
 
