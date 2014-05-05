@@ -29,7 +29,7 @@ This is simple enough:
 ----
 
 Now, we need to regenerate the HTML files to display logs on certain days.  The
-results of this will be in /var/www/www.mlpack.org/irc/html/ but we will also
+results of this will be in /var/www/www.mlpack.org/irc/ but we will also
 provide the following:
 
   /var/www/www.mlpack.org/irc/mlpack.${DATE}.html (current day's logs)
@@ -45,12 +45,12 @@ and if so, it regenerates all the pages.  This cron job will run some scripts:
 That script will parse all of the log files and build .html files for every log
 file.  Templates for the header and footer are found in
 
-  /var/www/www.mlpack.org/irc/html/templates/header.html
-  /var/www/www.mlpack.org/irc/html/templates/footer.html
+  /var/www/www.mlpack.org/irc/templates/header.html
+  /var/www/www.mlpack.org/irc/templates/footer.html
 
 And there is also a different header for all-logs.html:
 
-  /var/www/www.mlpack.org/irc/html/templates/header-all.html
+  /var/www/www.mlpack.org/irc/templates/header-all.html
 
 Our crontab entry looks like this:
 
