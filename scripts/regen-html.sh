@@ -42,7 +42,7 @@ for i in $logdir/*; do
            sed -E 's/>/\&gt;/g' |
            sed -E 's/$/<\/font><br>/' |
            sed -E 's/-!-/<\/font><font color="#aaaaaa">-!-<\/font><font color="#666666">/' |
-           sed -E 's/(&lt;.*&gt;)/<\/font><font color="#eab72c">\1<\/font><font color="#aaaaaa">/'|
+           sed -E 's/(&lt; .*&gt;)/<\/font><font color="#eab72c">\1<\/font><font color="#aaaaaa">/'|
            sed -E 's/^/<font color="#bb2222">/' > $htmldir/$filename.tmp;
 
   # Generate the calendar.
