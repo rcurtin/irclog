@@ -1,0 +1,1 @@
+../scripts/regen-newest-html.sh
