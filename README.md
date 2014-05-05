@@ -1,9 +1,9 @@
 The scripts contained in this directory are meant to manage IRC logs for
-#mlpack.  Instead of using PHP or some pre-existing solution, we can use a
-hacked-together mess of bullshit cron jobs and shell scripts that works only for
-this particular setup and will fall over catastrophically in other situations.
-Seriously, using a cron job to update an HTML page with a calendar on it?  What
-the hell?  Why?
+mlpack (#mlpack on freenode).  Instead of using PHP or some pre-existing
+solution, we can use a hacked-together mess of bullshit cron jobs and shell
+scripts that works only for this particular setup and will fall over
+catastrophically in other situations.  Seriously, using a cron job to update an
+HTML page with a calendar on it?  What the hell?  Why?
 
 Our situation is this:
 
