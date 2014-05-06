@@ -29,21 +29,9 @@ if [ "a$scriptdir" = "a" ]; then
 fi
 
 for i in $logdir/*; do
-  # Isn't this abomination of sed awesome?  We're taking the irssi logs and
-  # forcing them to be HTML.  If irssi ever changes log format, we're super
-  # fucked.  You'll know because the logs will display all funky and on one
-  # line, then you'll find your way here and go "dear fucking Jesus what is this
-  # shit?".  Haha!  Sucks!  Have fun!
-
   # Turn the irssi log into something that's kind of like HTML.
-
   filename=`basename $i .log | sed 's/#//'`;
-  cat $i | sed -E 's/</\&lt;/g' |
-           sed -E 's/>/\&gt;/g' |
-           sed -E 's/$/<\/font><br>/' |
-           sed -E 's/-!-/<\/font><font color="#aaaaaa">-!-<\/font><font color="#666666">/' |
-           sed -E 's/(&lt; .*&gt;)/<\/font><font color="#eab72c">\1<\/font><font color="#aaaaaa">/'|
-           sed -E 's/^/<font color="#bb2222">/' > $htmldir/$filename.tmp;
+  $scriptdir/process-log.sh $i > $htmldir/$filename.tmp;
 
   # Generate the calendar.
   $scriptdir/create-calendar.sh $i $logdir $htmldir/cal.tmp;

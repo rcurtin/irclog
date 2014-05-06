@@ -34,12 +34,6 @@ fi
 
 logfile=`ls -t $logdir | head -1`;
 
-# Isn't this abomination of sed awesome?  We're taking the irssi logs and
-# forcing them to be HTML.  If irssi ever changes log format, we're super
-# fucked.  You'll know because the logs will display all funky and on one line,
-# then you'll find your way here and go "dear fucking Jesus what is this shit?".
-# Haha!  Sucks!  Have fun!
-
 # Modify some unset information in the templates, after deriving what the day
 # is.
 filename=`basename $logfile .log | sed 's/#//'`;
@@ -52,11 +46,6 @@ cat $htmldir/templates/header.html | sed -E 's/%%DAY%%/'$date'/g'
 $scriptdir/create-stdout-calendar.sh $logfile $logdir;
 
 # Turn the irssi log into something that's kind of like HTML.
-cat $logdir/$logfile | sed -E 's/</\&lt;/g' |
-                       sed -E 's/>/\&gt;/g' |
-                       sed -E 's/$/<\/font><br>/' |
-                       sed -E 's/-!-/<\/font><font color="#aaaaaa">-!-<\/font><font color="#666666">/' |
-                       sed -E 's/(&lt; .*&gt;)/<\/font><font color="#eab72c">\1<\/font><font color="#aaaaaa">/'|
-                       sed -E 's/^/<font color="#bb2222">/'
+$scriptdir/process-log.sh $logfile;
 
 cat $htmldir/templates/footer.html
