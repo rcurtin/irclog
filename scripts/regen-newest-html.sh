@@ -46,6 +46,6 @@ cat $htmldir/templates/header.html | sed -E 's/%%DAY%%/'$date'/g'
 $scriptdir/create-stdout-calendar.sh $logfile $logdir;
 
 # Turn the irssi log into something that's kind of like HTML.
-$scriptdir/process-log.sh $logfile;
+$scriptdir/process-log.sh $logdir/$logfile;
 
 cat $htmldir/templates/footer.html
