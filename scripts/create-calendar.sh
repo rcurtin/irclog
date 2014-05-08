@@ -36,6 +36,7 @@ date=`basename $logfile .log | sed 's/^\#mlpack.//'`;
 year=`echo $date | sed -E 's/^([0-9]{4})[0-9]*/\1/'`;
 month=`echo $date | sed -E 's/^[0-9]{4}([0-9]{2})[0-9]*/\1/'`;
 day=`echo $date | sed -E 's/^[0-9]{6}([0-9]{2})/\1/'`;
+dayno=`echo $day | sed 's/^0//'`; # Remove a leading zero.
 
 # Get the weekday corresponding to the first day of the month.
 daynames=('Sun' 'Mon' 'Tue' 'Wed' 'Thu' 'Fri' 'Sat');
@@ -139,7 +140,7 @@ done
 
 # Now fill in all the days from the first of the month to the current day of the
 # month minus one.
-for i in `seq 1 $((day - 1))`;
+for i in `seq 1 $((dayno - 1))`;
 do
   # Do we need a new row?
   cellid=$((cellid + 1));
@@ -179,11 +180,10 @@ if [ "$cellid" -eq "7" ]; then
   cellid=0;
   echo "</div><div class=\"irccalrow\">" >> $outfile;
 fi
-adjday=`echo $day | sed 's/^[0]*//'`;
-echo "<div class=\"irccalactivecell\">$adjday</div>" >> $outfile;
+echo "<div class=\"irccalactivecell\">$dayno</div>" >> $outfile;
 
 # The rest of the days in the month.
-for i in `seq $((day + 1)) $daysinmonth`;
+for i in `seq $((dayno + 1)) $daysinmonth`;
 do
   # Do we need a new row?
   cellid=$((cellid + 1));
