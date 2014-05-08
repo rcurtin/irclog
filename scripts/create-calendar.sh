@@ -140,7 +140,7 @@ done
 
 # Now fill in all the days from the first of the month to the current day of the
 # month minus one.
-for i in `seq 1 $((dayno - 1))`;
+for i in `seq 1 $(($dayno - 1))`;
 do
   # Do we need a new row?
   cellid=$((cellid + 1));
@@ -183,7 +183,7 @@ fi
 echo "<div class=\"irccalactivecell\">$dayno</div>" >> $outfile;
 
 # The rest of the days in the month.
-for i in `seq $((dayno + 1)) $daysinmonth`;
+for i in `seq $(($dayno + 1)) $daysinmonth`;
 do
   # Do we need a new row?
   cellid=$((cellid + 1));

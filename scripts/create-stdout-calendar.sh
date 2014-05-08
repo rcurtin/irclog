@@ -34,6 +34,7 @@ daynames=('Sun' 'Mon' 'Tue' 'Wed' 'Thu' 'Fri' 'Sat');
 dow=`date --date="${year}${month}01" '+%w'`;
 monthname=`date --date="$date" '+%B'`;
 daysinmonth=`cal $month $year | grep '[^ ]' | tail -1 | awk -F' ' '{ print $NF }'`;
+dayno=`echo $day | sed 's/^0//'`; # Remove a leading zero.
 
 # Generate the first row of the calendar table for this month.  We'll use divs
 # because divs are the future and HTML table tags make people cringe.  This is
@@ -131,7 +132,7 @@ done
 
 # Now fill in all the days from the first of the month to the current day of the
 # month minus one.
-for i in `seq 1 $((day - 1))`;
+for i in `seq 1 $(($dayno - 1))`;
 do
   # Do we need a new row?
   cellid=$((cellid + 1));
@@ -171,11 +172,10 @@ if [ "$cellid" -eq "7" ]; then
   cellid=0;
   echo "</div><div class=\"irccalrow\">";
 fi
-adjday=`echo $day | sed 's/^[0]*//'`;
-echo "<div class=\"irccalactivecell\">$adjday</div>";
+echo "<div class=\"irccalactivecell\">$dayno</div>";
 
 # The rest of the days in the month.
-for i in `seq $((day + 1)) $daysinmonth`;
+for i in `seq $(($dayno + 1)) $daysinmonth`;
 do
   # Do we need a new row?
   cellid=$((cellid + 1));
