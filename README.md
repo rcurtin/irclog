@@ -24,7 +24,7 @@ First things first, let's get the actual logs in the right place.  We want all
 logs to be available in /var/www/www.mlpack.org/irc/logs/#mlpack.%Y%m%d.log.
 This is simple enough:
 
-  ln -s /home/ryan/irclogs/freenode/mlpack /var/www/www.mlpack.org/logs/
+  ln -s /home/ryan/irclogs/freenode/mlpack /var/www/www.mlpack.org/irc/logs/
 
 ----
 
@@ -56,9 +56,14 @@ Our crontab entry looks like this:
 
   5 * * * * /var/www/www.mlpack.org/irc/scripts/check-utc-new-day.sh /var/www/www.mlpack.org/irc/scripts/regen-html.sh /var/www/www.mlpack.org/irc/logs/ /var/www/www.mlpack.org/irc/ /var/www/www.mlpack.org/irc/scripts/
   5 * * * * /var/www/www.mlpack.org/irc/scripts/check-utc-new-day.sh /var/www/www.mlpack.org/irc/scripts/make-all-logs.sh /var/www/www.mlpack.org/irc/logs/ /var/www/www.mlpack.org/irc/
+  2 * * * * chmod a+r /var/www/www.mlpack.org/irc/logs/
 
 check-utc-new-day.sh is just a script that checks whether or not it is between
 12am and 1am UTC, and runs the given command if that is true.
+
+The chmod command is necessary because irssi doesn't seem to respect the
+log_create_mode parameter setting; we need to make sure that the logs are
+world-readable so that apache can read them.
 
 ----
 
