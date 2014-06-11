@@ -18,6 +18,7 @@ if [ "a$htmldir" = "a" ]; then
 fi
 
 # For each log entry, make a link.
+echo "<div class=\"irclogchatlines\">" >> $htmldir/all-logs.tmp;
 for i in $logdir/#mlpack.*.log;
 do
   filename=`basename $i .log | sed 's/#//'`;
@@ -25,16 +26,21 @@ do
   displaydate=`date --date=${date} '+%B %d, %Y (%A)'`;
   lines=`grep '^[0-9][0-9]:[0-9][0-9] < ' $i | wc -l`;
 
-  echo "<a href=\"${filename}.html\">$displaydate</a> " >> $htmldir/all-logs.tmp;
-  if [ "$lines" -gt "10" ]; then
+  echo "<a href=\"${filename}.html\">$displaydate</a><div class=\"lines\">" >> $htmldir/all-logs.tmp;
+  if [ "$lines" -gt "300" ]; then
+    echo "<font class=\"irclotsoflines3\">" >> $htmldir/all-logs.tmp;
+  elif [ "$lines" -gt "150" ]; then
+    echo "<font class=\"irclotsoflines2\">" >> $htmldir/all-logs.tmp;
+  elif [ "$lines" -gt "25" ]; then
     echo "<font class=\"irclotsoflines\">" >> $htmldir/all-logs.tmp;
   fi
   echo "[$lines lines of chat]" >> $htmldir/all-logs.tmp;
-  if [ "$lines" -gt "10" ]; then
+  if [ "$lines" -gt "25" ]; then
     echo "</font>" >> $htmldir/all-logs.tmp;
   fi
-  echo "<br>" >> $htmldir/all-logs.tmp;
+  echo "</div><br>" >> $htmldir/all-logs.tmp;
 done
+echo "</div>" >> $htmldir/all-logs.tmp;
 
 cat $htmldir/templates/header-all.html $htmldir/all-logs.tmp $htmldir/templates/footer.html > $htmldir/logs-all.html;
 
