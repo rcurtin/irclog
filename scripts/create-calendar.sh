@@ -62,7 +62,7 @@ fi
 
 # Does anything from last month exist?
 if [ -a "$logdir/#mlpack.${lastyear}${lastmonth}${day}.log" ]; then
-  linkto="#mlpack.${lastyear}${lastmonth}${day}.html";
+  linkto="mlpack.${lastyear}${lastmonth}${day}.html";
 else
   list=`ls $logdir/#mlpack.${lastyear}${lastmonth}*.log 2>/dev/null | wc -l`;
   if [ "a$list" = "a0" ]; then
@@ -94,7 +94,7 @@ if [ "$nextmonth" -lt "10" ]; then
 fi
 
 if [ -a "$logdir/#mlpack.${nextyear}${nextmonth}${day}.log" ]; then
-  linkto="#mlpack.${nextyear}${nextmonth}${day}.html";
+  linkto="mlpack.${nextyear}${nextmonth}${day}.html";
 else
   list=`ls $logdir/#mlpack.${nextyear}${nextmonth}*.log 2>/dev/null | wc -l`;
   if [ "a$list" = "a0" ]; then
