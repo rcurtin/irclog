@@ -59,7 +59,9 @@ if [ "$lastmonno" -eq "0" ]; then
   lastmonno="12";
 fi
 if [ "$lastmonno" -lt "10" ]; then
-  lastmonth="0$lastmonth";
+  lastmonth="0$lastmonno";
+else
+  lastmonth="$lastmonno";
 fi
 
 # Does anything from last month exist?
@@ -93,7 +95,9 @@ if [ "$nextmonno" -eq "13" ]; then
   nextmonth="1";
 fi
 if [ "$nextmonno" -lt "10" ]; then
-  nextmonth="0$nextmonth";
+  nextmonth="0$nextmonno";
+else
+  nextmonth="$nextmonno";
 fi
 
 if [ -a "$logdir/#mlpack.${nextyear}${nextmonth}${day}.log" ]; then
