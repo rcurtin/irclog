@@ -35,6 +35,7 @@ date=`basename $logfile .log | sed 's/^\#mlpack.//'`;
 # Split the date apart.
 year=`echo $date | sed -E 's/^([0-9]{4})[0-9]*/\1/'`;
 month=`echo $date | sed -E 's/^[0-9]{4}([0-9]{2})[0-9]*/\1/'`;
+monno=`echo $month | sed 's/^0//'`; # Remove a leading zero.
 day=`echo $date | sed -E 's/^[0-9]{6}([0-9]{2})/\1/'`;
 dayno=`echo $day | sed 's/^0//'`; # Remove a leading zero.
 
@@ -51,12 +52,13 @@ daysinmonth=`cal $month $year | grep '[^ ]' | tail -1 | awk -F' ' '{ print $NF }
 # Create the calendar itself, with links to last month and next month.
 echo "<div class=\"irccal\"><div class=\"irccaltop\">" > $outfile;
 lastyear=$year;
-lastmonth=$(($month - 1));
-if [ "$lastmonth" -eq "0" ]; then
+lastmonno=$(($monno - 1));
+if [ "$lastmonno" -eq "0" ]; then
   lastyear=$(($year - 1));
   lastmonth="12";
+  lastmonno="12";
 fi
-if [ "$lastmonth" -lt "10" ]; then
+if [ "$lastmonno" -lt "10" ]; then
   lastmonth="0$lastmonth";
 fi
 
@@ -84,12 +86,13 @@ fi
 
 # Does anything from next month exist?
 nextyear=$year;
-nextmonth=$(($month + 1));
-if [ "$nextmonth" -eq "13" ]; then
+nextmonno=$(($monno + 1));
+if [ "$nextmonno" -eq "13" ]; then
   nextyear=$(($year + 1));
-  nextmonth=1;
+  nextmonno="1";
+  nextmonth="1";
 fi
-if [ "$nextmonth" -lt "10" ]; then
+if [ "$nextmonno" -lt "10" ]; then
   nextmonth="0$nextmonth";
 fi
 
