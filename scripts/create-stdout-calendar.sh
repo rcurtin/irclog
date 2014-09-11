@@ -27,14 +27,15 @@ date=`basename $logfile .log | sed 's/^\#mlpack.//'`;
 # Split the date apart.
 year=`echo $date | sed -E 's/^([0-9]{4})[0-9]*/\1/'`;
 month=`echo $date | sed -E 's/^[0-9]{4}([0-9]{2})[0-9]*/\1/'`;
+monno=`echo $month | sed 's/^0//'`; # Remove a leading zero.
 day=`echo $date | sed -E 's/^[0-9]{6}([0-9]{2})/\1/'`;
+dayno=`echo $day | sed 's/^0//'`; # Remove a leading zero.
 
 # Get the weekday corresponding to the first day of the month.
 daynames=('Sun' 'Mon' 'Tue' 'Wed' 'Thu' 'Fri' 'Sat');
 dow=`date --date="${year}${month}01" '+%w'`;
 monthname=`date --date="$date" '+%B'`;
 daysinmonth=`cal $month $year | grep '[^ ]' | tail -1 | awk -F' ' '{ print $NF }'`;
-dayno=`echo $day | sed 's/^0//'`; # Remove a leading zero.
 
 # Generate the first row of the calendar table for this month.  We'll use divs
 # because divs are the future and HTML table tags make people cringe.  This is
@@ -43,18 +44,20 @@ dayno=`echo $day | sed 's/^0//'`; # Remove a leading zero.
 # Create the calendar itself, with links to last month and next month.
 echo "<div class=\"irccal\"><div class=\"irccaltop\">";
 lastyear=$year;
-lastmonth=$(($month - 1));
-if [ "$lastmonth" -eq "0" ]; then
+lastmonno=$(($monno - 1));
+if [ "$lastmonno" -eq "0" ]; then
   lastyear=$(($year - 1));
-  lastmonth="12";
+  lastmonno="12";
 fi
-if [ "$lastmonth" -lt "10" ]; then
-  lastmonth="0$lastmonth";
+if [ "$lastmonno" -lt "10" ]; then
+  lastmonth="0$lastmonno";
+else
+  lastmonth="$lastmonno";
 fi
 
 # Does anything from last month exist?
 if [ -a "$logdir/#mlpack.${lastyear}${lastmonth}${day}.log" ]; then
-  linkto="#mlpack.${lastyear}${lastmonth}${day}.html";
+  linkto="mlpack.${lastyear}${lastmonth}${day}.html";
 else
   list=`ls $logdir/#mlpack.${lastyear}${lastmonth}*.log 2>/dev/null | wc -l`;
   if [ "a$list" = "a0" ]; then
@@ -76,17 +79,20 @@ fi
 
 # Does anything from next month exist?
 nextyear=$year;
-nextmonth=$(($month + 1));
-if [ "$nextmonth" -eq "13" ]; then
+nextmonno=$(($monno + 1));
+if [ "$nextmonno" -eq "13" ]; then
   nextyear=$(($year + 1));
-  nextmonth=1;
+  nextmonno="1";
+  nextmonth="1";
 fi
-if [ "$nextmonth" -lt "10" ]; then
-  nextmonth="0$nextmonth";
+if [ "$nextmonno" -lt "10" ]; then
+  nextmonth="0$nextmonno";
+else
+  nextmonth="$nextmonno";
 fi
 
 if [ -a "$logdir/#mlpack.${nextyear}${nextmonth}${day}.log" ]; then
-  linkto="#mlpack.${nextyear}${nextmonth}${day}.html";
+  linkto="mlpack.${nextyear}${nextmonth}${day}.html";
 else
   list=`ls $logdir/#mlpack.${nextyear}${nextmonth}*.log 2>/dev/null | wc -l`;
   if [ "a$list" = "a0" ]; then
