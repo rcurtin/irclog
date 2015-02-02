@@ -64,10 +64,18 @@ else
     # Nothing exists.  No link.
     linkto="";
   else
-    # Link to oldest.
-    linkto=`ls -t $logdir/#mlpack.${lastyear}${lastmonth}*.log | sed 's/#//' | tail -1`;
-    linkto=`basename $linkto .log`;
-    linkto="${linkto}.html"
+    if [ "${day}" -ge "29" ]; then
+      # Link to the newest; the number of days in the previous month is
+      # different.
+      linkto=`ls -t $logdir/#mlpack.${lastyear}${lastmonth}*.log | sed 's/#//' | head -1`;
+      linkto=`basename $linkto .log`;
+      linkto="${linkto}.html";
+    else
+      # Link to oldest.
+      linkto=`ls -t $logdir/#mlpack.${lastyear}${lastmonth}*.log | sed 's/#//' | tail -1`;
+      linkto=`basename $linkto .log`;
+      linkto="${linkto}.html";
+    fi
   fi
 fi
 
