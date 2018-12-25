@@ -12,8 +12,10 @@ Our situation is this:
  rotates this.  It is in UTC.  Commands for making irssi use UTC time and
  automatically logging:
 
-   /script exec $ENV{'TZ'}='UTC';
-   /log open -targets #mlpack ~/irclogs/freenode/mlpack/#mlpack.%Y%m%d.log
+```
+/script exec $ENV{'TZ'}='UTC';
+/log open -targets #mlpack ~/irclogs/freenode/mlpack/#mlpack.%Y%m%d.log
+```
 
  We want to display all of these logs on www.mlpack.org/irc/logs.html (and
  related pages), and also make them available for download.
