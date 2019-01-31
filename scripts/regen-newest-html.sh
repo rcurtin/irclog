@@ -13,9 +13,9 @@ echo "Content-type: text/html"
 echo "";
 
 cd ..; # Don't run in scripts/.
-logdir='./logs/';
-htmldir='.';
-scriptdir='./scripts/';
+logdir='./irc/logs/';
+htmldir='./irc/';
+scriptdir='./irc/scripts/';
 
 if [ "a$logdir" = "a" ]; then
   echo "Must specify log directory as first parameter."

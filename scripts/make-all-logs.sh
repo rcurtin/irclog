@@ -17,10 +17,13 @@ if [ "a$htmldir" = "a" ]; then
   exit
 fi
 
-# For each log entry, make a link.
+# For each log entry, make a link.  Iterate in reverse, so that newest logs are
+# on top.
 echo "<div class=\"irclogchatlines\">" >> $htmldir/all-logs.tmp;
-for i in $logdir/#mlpack.*.log;
+files=($logdir/#mlpack.*.log);
+for ((index=${#files[@]}-1; index >= 0; index--));
 do
+  i="${files[$index]}";
   filename=`basename $i .log | sed 's/#//'`;
   date=`echo $filename | sed 's/mlpack\.//'`;
   displaydate=`date --date=${date} '+%B %d, %Y (%A)'`;
